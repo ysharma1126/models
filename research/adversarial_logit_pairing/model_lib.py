@@ -151,7 +151,7 @@ def get_model(model_name, num_classes):
   """
   if model_name.startswith('resnet'):
     def resnet_model(images, is_training, reuse=tf.AUTO_REUSE):
-      with tf.contrib.framework.arg_scope(resnet_v2.resnet_arg_scope()):
+      with slim.arg_scope(resnet_v2.resnet_arg_scope()):
         resnet_fn = RESNET_MODELS[model_name]
         logits, _ = resnet_fn(images, num_classes, is_training=is_training,
                               reuse=reuse)
