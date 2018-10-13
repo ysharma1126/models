@@ -23,9 +23,7 @@ import six
 
 import tensorflow as tf
 
-from tensorflow.contrib.slim.nets import resnet_v2
-from tensorflow.contrib.slim.nets import inception
-import inception_resnet_v2
+from nets import inception_v3, inception_v4, inception_resnet_v2, resnet_v2
 
 slim = tf.contrib.slim
 
@@ -162,8 +160,8 @@ def get_model(model_name, num_classes):
     return resnet_model
   elif model_name.startswith('inception_v3'):
     def inception_model(images, is_training, reuse=tf.AUTO_REUSE):
-      with slim.arg_scope(inception.inception_v3_arg_scope()):
-        logits, _ = inception.inception_v3(
+      with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
+        logits, _ = inception_v3.inception_v3(
             images, num_classes=num_classes, is_training=is_training, reuse=reuse)
         logits = tf.reshape(logits, [-1, num_classes])
       return logits
