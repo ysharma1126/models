@@ -53,6 +53,9 @@ flags.DEFINE_string('model_name', 'resnet_v2_50', 'Name of the model.')
 flags.DEFINE_string('adv_method', 'clean',
                     'Method which is used to generate adversarial examples.')
 
+flags.DEFINE_string('dataset', 'imagenet',
+                    'Dataset: "tiny_imagenet" or "imagenet".')
+
 flags.DEFINE_integer('dataset_image_size', 64,
                      'Size of the images in the dataset.')
 
