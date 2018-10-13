@@ -71,6 +71,8 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_float(
     'adversarial_eps', 0.0,
     'Size of adversarial perturbation in range [0, 255].')
+flags.DEFINE_string('dataset', 'imagenet',
+                    'Dataset: "tiny_imagenet" or "imagenet".')
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -256,7 +258,15 @@ def main(_):
     ###################
     # Prepare dataset #
     ###################
-    dataset = imagenet.get_split(FLAGS.split_name, FLAGS.dataset_dir)
+    if FLAGS.dataset == 'tiny_imagenet':
+      if FLAGS.split_name.lower().startswith('train'):
+          filepath = os.path.join(FLAGS.dataset_dir, 'train.tfrecord')
+      elif FLAGS.split_name.lower().startswith('validation'):
+        filepath = os.path.join(FLAGS.dataset_dir, 'validation.tfrecord')
+      else:
+        raise ValueError('Invalid split: %s' % split)
+    else:
+      dataset = imagenet.get_split(FLAGS.split_name, FLAGS.dataset_dir)
     provider = slim.dataset_data_provider.DatasetDataProvider(
         dataset,
         shuffle=False,

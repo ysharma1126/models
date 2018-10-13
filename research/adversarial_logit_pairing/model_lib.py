@@ -156,6 +156,22 @@ def get_model(model_name, num_classes):
         logits = tf.reshape(logits, [-1, num_classes])
       return logits
     return resnet_model
+  elif model_name.startswith('inception_v3'):
+    def inception_model(images, is_training, reuse=tf.AUTO_REUSE):
+      with slim.arg_scope(inception.inception_v3_arg_scope()):
+        logits, _ = inception.inception_v3(
+            images, num_classes=num_classes, is_training=is_training, reuse=reuse)
+        logits = tf.reshape(logits, [-1, num_classes])
+      return logits
+    return inception_model
+  elif model_name.startswith('inception_resnet_v2'):
+    def incres_model(images, is_training, reuse=tf.AUTO_REUSE):
+      with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
+        logits, _ = inception_resnet_v2.inception_resnet_v2(
+            images, num_classes=num_classes, is_training=is_training, reuse=reuse)
+        logits = tf.reshape(logits, [-1, num_classes])
+      return logits
+    return incres_model
   else:
     raise ValueError('Invalid model: %s' % model_name)
 
