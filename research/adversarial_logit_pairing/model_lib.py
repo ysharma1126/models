@@ -24,6 +24,8 @@ import six
 import tensorflow as tf
 
 from tensorflow.contrib.slim.nets import resnet_v2
+from tensorflow.contrib.slim.nets import inception
+import inception_resnet_v2
 
 slim = tf.contrib.slim
 
