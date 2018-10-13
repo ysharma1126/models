@@ -25,6 +25,8 @@ import tensorflow as tf
 
 from tensorflow.contrib.slim.nets import resnet_v2
 
+slim = tf.contrib.slim
+
 
 def default_hparams():
   """Returns default hyperparameters."""
