@@ -160,6 +160,8 @@ def get_model(model_name, num_classes):
     return resnet_model
   elif model_name.startswith('inception_v3'):
     def inception_model(images, is_training, reuse=tf.AUTO_REUSE):
+      images = tf.image.resize_bilinear(images, [299, 299],
+                                 align_corners=False)
       with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
         logits, _ = inception_v3.inception_v3(
             images, num_classes=num_classes, is_training=is_training, reuse=reuse)
